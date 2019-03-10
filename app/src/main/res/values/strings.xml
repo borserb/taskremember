@@ -4,4 +4,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Helloooooooo</string>
     <string name="action_settings">Отправить письмо разработчику</string>
+    <string name="Priority">Приоритет</string>
+    <string name="bt_priority_1">Приоритет 1</string>
 </resources>

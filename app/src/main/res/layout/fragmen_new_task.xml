@@ -29,12 +29,21 @@
             android:src="@drawable/ic_action_add" />
 
     </LinearLayout>
-<android.support.v7.widget.RecyclerView
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/Priority"
+        android:id="@+id/tv_priority"
+        android:padding="16dp"
+        android:layout_gravity="center_vertical"/>
+
+<!--<android.support.v7.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/recycleViewId">
 
-</android.support.v7.widget.RecyclerView>
+</android.support.v7.widget.RecyclerView>-->
 
 
 </LinearLayout>

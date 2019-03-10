@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,16 +15,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 public class TasksFragment extends Fragment {
     ImageButton imageButton;
     public final static int ACTIVITY_CODE = 101;
     List<Task> tasks = new ArrayList();
+    ConstraintLayout backgorund;
 
 
     public TasksFragment() {
@@ -42,6 +47,15 @@ public class TasksFragment extends Fragment {
 
         RecyclerView rv = view.findViewById(R.id.recycleViewMainActivytyId);
         RecycleViewAdpter adapter = new RecycleViewAdpter(getContext(), tasks);
+        backgorund = (ConstraintLayout) view.findViewById(R.id.backgroun_off);
+        backgorund.setVisibility(View.INVISIBLE);
+
+        if (tasks.isEmpty()){
+            backgorund.setVisibility(View.VISIBLE);
+        } else {
+            backgorund.setVisibility(View.INVISIBLE);
+        }
+
 
         rv.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -56,24 +70,32 @@ public class TasksFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Click", Toast.LENGTH_LONG).show();
-/*                Intent intent = new Intent(getContext(), NewTaskActivity.class);
-                *//*startActivityForResult(intent, ACTIVITY_CODE);*/
+                Intent intent = new Intent(getContext(), NewTaskActivity.class);
+                startActivityForResult(intent, ACTIVITY_CODE);
             }
         });
-        tasks.add(new Task("Name", Color.GREEN));
+       /* tasks.add(new Task("Name", Color.GREEN));*/
+
 
         return view;
     }
 
-/*    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTIVITY_CODE && resultCode==RESULT_OK && data!=null){
             Task task;
             task =(Task) data.getParcelableExtra(NewTaskActivity.NEW_TASK_KEY);
             tasks.add(task);
-            Toast.makeText(this, task.getName() , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), task.getName() , Toast.LENGTH_SHORT).show();
+            if (tasks.isEmpty()){
+                backgorund.setVisibility(View.VISIBLE);
+            } else {
+                backgorund.setVisibility(View.INVISIBLE);
+            }
         }
-    }*/
+    }
 }
 
