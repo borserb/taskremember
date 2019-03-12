@@ -1,11 +1,13 @@
 package com.example.admin.taskremember;
 
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
@@ -62,7 +64,18 @@ public class NewTaskFragmen extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "New task activity click", Toast.LENGTH_LONG).show();
-                Task task = new Task(editText.getText().toString(), Color.RED);
+                Task  task = new Task(editText.getText().toString(), 0);
+                FragmentActivity activity = getActivity();
+
+                if (activity!=null){
+
+                    final AppDatabase db = Room.databaseBuilder(activity,AppDatabase.class,"databse-name").allowMainThreadQueries().build();
+                    db.taskDao().insert(task);
+
+                    /*Task task = new Task(editText.getText().toString(), Color.RED);*/
+                }
+
+
 
             }
         });

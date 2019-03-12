@@ -53,4 +53,9 @@ public class RecycleViewAdpter extends RecyclerView.Adapter <ViewHolder> {
         Log.i("RecycleViewLearn", "getCount in RecycleViewAdpter");
         return taskList.size();
     }
+
+    public void setTaskList (List<Task> tasks){
+        this.taskList=tasks;
+        notifyDataSetChanged();
+    }
 }

@@ -1,13 +1,16 @@
 package com.example.admin.taskremember;
 
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-
+@Entity
 public class Task implements Parcelable {
-    private String name;
-    private Integer inn;
-    private int priprity;
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+    public String name;
+    public int priprity;
 
     public Task(String name, int priprity) {
         this.name = name;
@@ -23,13 +26,7 @@ public class Task implements Parcelable {
         this.name = name;
     }
 
-    public Integer getInn() {
-        return inn;
-    }
 
-    public void setInn(Integer inn) {
-        this.inn = inn;
-    }
 
     public int getPriprity() {
         return priprity;
@@ -47,13 +44,11 @@ public class Task implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
-        dest.writeValue(this.inn);
         dest.writeInt(this.priprity);
     }
 
     protected Task(Parcel in) {
         this.name = in.readString();
-        this.inn = (Integer) in.readValue(Integer.class.getClassLoader());
         this.priprity = in.readInt();
     }
 

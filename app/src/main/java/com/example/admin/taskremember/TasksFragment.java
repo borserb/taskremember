@@ -1,5 +1,6 @@
 package com.example.admin.taskremember;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,8 +29,9 @@ import static android.app.Activity.RESULT_OK;
 public class TasksFragment extends Fragment {
     ImageButton imageButton;
     public final static int ACTIVITY_CODE = 101;
-    List<Task> tasks = new ArrayList();
+    List <Task> tasks = new ArrayList();
     ConstraintLayout backgorund;
+    RecycleViewAdpter adapter;
 
 
     public TasksFragment() {
@@ -46,15 +49,9 @@ public class TasksFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_main_old, container, false);
 
         RecyclerView rv = view.findViewById(R.id.recycleViewMainActivytyId);
-        RecycleViewAdpter adapter = new RecycleViewAdpter(getContext(), tasks);
+        adapter = new RecycleViewAdpter(getContext(), tasks);
         backgorund = (ConstraintLayout) view.findViewById(R.id.backgroun_off);
         backgorund.setVisibility(View.INVISIBLE);
-
-        if (tasks.isEmpty()){
-            backgorund.setVisibility(View.VISIBLE);
-        } else {
-            backgorund.setVisibility(View.INVISIBLE);
-        }
 
 
         rv.setAdapter(adapter);
@@ -74,7 +71,7 @@ public class TasksFragment extends Fragment {
                 startActivityForResult(intent, ACTIVITY_CODE);
             }
         });
-       /* tasks.add(new Task("Name", Color.GREEN));*/
+        /* tasks.add(new Task("Name", Color.GREEN));*/
 
 
         return view;
@@ -82,7 +79,7 @@ public class TasksFragment extends Fragment {
 
 
 
-    @Override
+/*    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTIVITY_CODE && resultCode==RESULT_OK && data!=null){
@@ -90,12 +87,35 @@ public class TasksFragment extends Fragment {
             task =(Task) data.getParcelableExtra(NewTaskActivity.NEW_TASK_KEY);
             tasks.add(task);
             Toast.makeText(getContext(), task.getName() , Toast.LENGTH_SHORT).show();
-            if (tasks.isEmpty()){
-                backgorund.setVisibility(View.VISIBLE);
-            } else {
-                backgorund.setVisibility(View.INVISIBLE);
-            }
+            tasksIsEmpty();
         }
+    }*/
+
+    private void tasksIsEmpty() {
+        if (tasks.isEmpty()) {
+            backgorund.setVisibility(View.VISIBLE);
+        } else {
+            backgorund.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+        FragmentActivity activity = getActivity();
+
+        if (activity != null) {
+
+            final AppDatabase db = Room.databaseBuilder(activity, AppDatabase.class, "databse-name").allowMainThreadQueries().build();
+            db.taskDao();
+            this.tasks = db.taskDao().getAll();
+            adapter.setTaskList(tasks);
+            tasksIsEmpty();
+
+        }
+
     }
 }
 
