@@ -36,14 +36,8 @@
         android:text="@string/Priority"
         android:id="@+id/tv_priority"
         android:padding="16dp"
-        android:layout_gravity="center_vertical"/>
-
-<!--<android.support.v7.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/recycleViewId">
-
-</android.support.v7.widget.RecyclerView>-->
+        android:layout_gravity="center_vertical"
+        />
 
 
 </LinearLayout>

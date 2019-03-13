@@ -6,4 +6,9 @@
     <string name="action_settings">Отправить письмо разработчику</string>
     <string name="Priority">Приоритет</string>
     <string name="bt_priority_1">Приоритет 1</string>
+    <string name="priority1">Приоритет 1</string>
+    <string name="priority2">Приоритет 2</string>
+    <string name="priority3">Приоритет 3</string>
+    <string name="priority4">Приоритет 4</string>
+    <string name="cancel">отмена</string>
 </resources>

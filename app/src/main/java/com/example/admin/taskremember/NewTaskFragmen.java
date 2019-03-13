@@ -72,7 +72,6 @@ public class NewTaskFragmen extends Fragment {
                     final AppDatabase db = Room.databaseBuilder(activity,AppDatabase.class,"databse-name").allowMainThreadQueries().build();
                     db.taskDao().insert(task);
 
-                    /*Task task = new Task(editText.getText().toString(), Color.RED);*/
                 }
 
 

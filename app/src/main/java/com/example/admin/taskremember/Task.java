@@ -9,6 +9,7 @@ import android.os.Parcelable;
 public class Task implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     public int id;
+
     public String name;
     public int priprity;
 

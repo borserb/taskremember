@@ -9,7 +9,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PriorityDialogFragmenManager extends DialogFragment {
@@ -38,14 +39,43 @@ public class PriorityDialogFragmenManager extends DialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Button button = (Button) view.findViewById(R.id.bt_choose_priority_1);
-        button.setOnClickListener(new View.OnClickListener() {
+        final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.dialog_fragment);
+        final TextView textView1 = (TextView) view.findViewById(R.id.bt_choose_priority_1);
+        final TextView textView2 = (TextView) view.findViewById(R.id.bt_choose_priority_2);
+        final TextView textView3 = (TextView) view.findViewById(R.id.bt_choose_priority_3);
+        final TextView textView4 = (TextView) view.findViewById(R.id.bt_choose_priority_4);
+        final  TextView textViewCancel = (TextView) view.findViewById(R.id.bt_cancel);
+
+
+        View.OnClickListener onClickListner = new  View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Выбор приоритета", Toast.LENGTH_SHORT).show();
+/*
+                switch (v.getId()) {
+                    case R.id.bt_cancel:
+                        Toast.makeText(getContext(), "Выбор приоритета " + R.id.bt_cancel, Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.bt_choose_priority_1:
+                        Toast.makeText(getContext(), "Выбор приоритета " + R.id.bt_choose_priority_1, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+*/
+
+                Toast.makeText(getContext(), "Выбор приоритета " +v.getId(), Toast.LENGTH_SHORT).show();
                 iPriorityDialogListner.onPriorityChoose(10);
             }
-        });
+        };
+
+        textView1.setOnClickListener(onClickListner);
+        textView2.setOnClickListener(onClickListner);
+        textView3.setOnClickListener(onClickListner);
+        textView4.setOnClickListener(onClickListner);
+        textViewCancel.setOnClickListener(onClickListner);
+
+
+
+
+
         super.onViewCreated(view, savedInstanceState);
     }
 
