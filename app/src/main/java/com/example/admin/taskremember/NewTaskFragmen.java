@@ -36,6 +36,7 @@ public class NewTaskFragmen extends Fragment {
     EditText editText;
     ImageButton imageButton;
     TextView tvPriority;
+    private int priprity;
 
     public NewTaskFragmen() {
         // Required empty public constructor
@@ -64,36 +65,19 @@ public class NewTaskFragmen extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "New task activity click", Toast.LENGTH_LONG).show();
-                Task  task = new Task(editText.getText().toString(), 0);
-                FragmentActivity activity = getActivity();
+                FragmentActivity activity = (NewTaskActivity) getActivity();
+                priprity = ((NewTaskActivity) activity).getPriorityInAtivity();
+                Task task = new Task(editText.getText().toString(), getResources().getColor(priprity));
 
-                if (activity!=null){
+                if (activity != null) {
 
-                    final AppDatabase db = Room.databaseBuilder(activity,AppDatabase.class,"databse-name").allowMainThreadQueries().build();
+                    final AppDatabase db = Room.databaseBuilder(activity, AppDatabase.class, "databse-name").allowMainThreadQueries().build();
                     db.taskDao().insert(task);
 
                 }
 
-
-
             }
         });
-
-
-
-
-/*
-        RecyclerView rv = root.findViewById(R.id.recycleViewId);
-        RecycleViewAdpter adapter = new RecycleViewAdpter(getContext(), tasks);
-        rv.setAdapter(adapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(rv.getContext(),
-                linearLayoutManager.getOrientation());
-        rv.addItemDecoration(mDividerItemDecoration);
-        Log.i("RecycleViewLearn" , "адаптер и менеджер оозданы newTask");
-*/
-
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -112,7 +96,6 @@ public class NewTaskFragmen extends Fragment {
 
             }
         });
-
         return root;
     }
 

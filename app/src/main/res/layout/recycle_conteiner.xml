@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/point"
         android:text="•"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:gravity="center"/>
 
     <TextView
@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="TextView"
-        android:textSize="16dp"/>
+        android:textSize="16dp"
+        android:layout_gravity="center_vertical"/>
 
 
 </LinearLayout>

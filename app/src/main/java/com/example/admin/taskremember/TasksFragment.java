@@ -47,7 +47,6 @@ public class TasksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_old, container, false);
-
         RecyclerView rv = view.findViewById(R.id.recycleViewMainActivytyId);
         adapter = new RecycleViewAdpter(getContext(), tasks);
         backgorund = (ConstraintLayout) view.findViewById(R.id.backgroun_off);
@@ -71,7 +70,6 @@ public class TasksFragment extends Fragment {
                 startActivityForResult(intent, ACTIVITY_CODE);
             }
         });
-        /* tasks.add(new Task("Name", Color.GREEN));*/
 
 
         return view;
@@ -79,17 +77,7 @@ public class TasksFragment extends Fragment {
 
 
 
-/*    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ACTIVITY_CODE && resultCode==RESULT_OK && data!=null){
-            Task task;
-            task =(Task) data.getParcelableExtra(NewTaskActivity.NEW_TASK_KEY);
-            tasks.add(task);
-            Toast.makeText(getContext(), task.getName() , Toast.LENGTH_SHORT).show();
-            tasksIsEmpty();
-        }
-    }*/
+
 
     private void tasksIsEmpty() {
         if (tasks.isEmpty()) {
@@ -102,7 +90,6 @@ public class TasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
 
         FragmentActivity activity = getActivity();
 

@@ -33,6 +33,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:textColor="@color/orang_red_1"
         android:text="@string/Priority"
         android:id="@+id/tv_priority"
         android:padding="16dp"

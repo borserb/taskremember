@@ -2,6 +2,7 @@ package com.example.admin.taskremember;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,25 +45,34 @@ public class PriorityDialogFragmenManager extends DialogFragment {
         final TextView textView2 = (TextView) view.findViewById(R.id.bt_choose_priority_2);
         final TextView textView3 = (TextView) view.findViewById(R.id.bt_choose_priority_3);
         final TextView textView4 = (TextView) view.findViewById(R.id.bt_choose_priority_4);
-        final  TextView textViewCancel = (TextView) view.findViewById(R.id.bt_cancel);
+        final TextView textViewCancel = (TextView) view.findViewById(R.id.bt_cancel);
 
 
         View.OnClickListener onClickListner = new  View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
                 switch (v.getId()) {
                     case R.id.bt_cancel:
-                        Toast.makeText(getContext(), "Выбор приоритета " + R.id.bt_cancel, Toast.LENGTH_SHORT).show();
+                        /*Toast.makeText(getContext(), "Выбор приоритета " + "отмена", Toast.LENGTH_SHORT).show();*/
+                        /*iPriorityDialogListner.onPriorityChoose(0);*/
                         break;
                     case R.id.bt_choose_priority_1:
-                        Toast.makeText(getContext(), "Выбор приоритета " + R.id.bt_choose_priority_1, Toast.LENGTH_SHORT).show();
+                        /*Toast.makeText(getContext(), "Выбор приоритета " + "1", Toast.LENGTH_SHORT).show();*/
+                        iPriorityDialogListner.onPriorityChoose(R.color.orang_red_1);
+                        break;
+                    case R.id.bt_choose_priority_2:
+                        /*Toast.makeText(getContext(), "Выбор приоритета " + "2", Toast.LENGTH_SHORT).show();*/
+                        iPriorityDialogListner.onPriorityChoose(R.color.sun_yellow_2);
+                        break;
+                    case R.id.bt_choose_priority_3:
+                        /*Toast.makeText(getContext(), "Выбор приоритета " + "3", Toast.LENGTH_SHORT).show();*/
+                        iPriorityDialogListner.onPriorityChoose(R.color.viridian_3);
+                        break;
+                    case R.id.bt_choose_priority_4:
+                        /*Toast.makeText(getContext(), "Выбор приоритета " + "4", Toast.LENGTH_SHORT).show();*/
+                        iPriorityDialogListner.onPriorityChoose(R.color.clear_blue_4);
                         break;
                 }
-*/
-
-                Toast.makeText(getContext(), "Выбор приоритета " +v.getId(), Toast.LENGTH_SHORT).show();
-                iPriorityDialogListner.onPriorityChoose(10);
             }
         };
 
@@ -71,9 +81,6 @@ public class PriorityDialogFragmenManager extends DialogFragment {
         textView3.setOnClickListener(onClickListner);
         textView4.setOnClickListener(onClickListner);
         textViewCancel.setOnClickListener(onClickListner);
-
-
-
 
 
         super.onViewCreated(view, savedInstanceState);

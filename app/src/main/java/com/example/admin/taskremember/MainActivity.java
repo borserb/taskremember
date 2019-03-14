@@ -29,12 +29,16 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         vpTabs.setAdapter(new TabsFragmentAdapter(fragmentManager));
-
         tlTabs.setupWithViewPager(vpTabs);
+        applyThem();
+
+
+    }
+
+    private void applyThem() {
         tlTabs.setBackgroundColor(getResources().getColor(R.color.blueFranchColor));
         tlTabs.setTabTextColors(getResources().getColor(R.color.white_color),getResources().getColor(R.color.white_color));
         tlTabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.white_color));
-
     }
 
     @Override
