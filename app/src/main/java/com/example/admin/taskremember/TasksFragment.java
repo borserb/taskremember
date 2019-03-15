@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +49,7 @@ public class TasksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_old, container, false);
-        RecyclerView rv = view.findViewById(R.id.recycleViewMainActivytyId);
+        final RecyclerView rv = view.findViewById(R.id.recycleViewMainActivytyId);
         adapter = new RecycleViewAdpter(getContext(), tasks);
         backgorund = (ConstraintLayout) view.findViewById(R.id.backgroun_off);
         backgorund.setVisibility(View.INVISIBLE);
@@ -60,6 +62,29 @@ public class TasksFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         rv.addItemDecoration(mDividerItemDecoration);
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                final FragmentActivity activity = getActivity();
+
+                if (activity != null) {
+
+                    final AppDatabase db = Room.databaseBuilder(activity, AppDatabase.class, "databse-name").allowMainThreadQueries().build();
+                    int position = viewHolder.getPosition();
+                    db.taskDao().del(tasks.get(position));
+                    tasks.remove(tasks.get(position));
+                    adapter.notifyItemRemoved(position);
+
+                }
+            }
+        }).attachToRecyclerView(rv);
+
+
         imageButton = view.findViewById(R.id.imageButtonAddNewTascActivity);
         imageButton.setOnClickListener(new View.OnClickListener() {
 
@@ -71,12 +96,8 @@ public class TasksFragment extends Fragment {
             }
         });
 
-
         return view;
     }
-
-
-
 
 
     private void tasksIsEmpty() {
