@@ -3,6 +3,7 @@ package com.example.admin.taskremember;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,11 +30,17 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 public class TasksFragment extends Fragment {
+    public static final String APP_PREFERENCES = "my_shared_pref";
+    public static final String APP_PREFERENCES_TASKS_END = "tasks_end";
+    IQuantityTasksEndListner iQuantityTasksEndListner;
+
+
     ImageButton imageButton;
     public final static int ACTIVITY_CODE = 101;
     List <Task> tasks = new ArrayList();
     ConstraintLayout backgorund;
     RecycleViewAdpter adapter;
+    SharedPreferences sharedPreferences;
 
 
     public TasksFragment() {
@@ -49,6 +56,14 @@ public class TasksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_old, container, false);
+
+
+        FragmentActivity activity = getActivity();
+        iQuantityTasksEndListner = (IQuantityTasksEndListner) activity;
+
+        sharedPreferences = activity.getSharedPreferences(APP_PREFERENCES, activity.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
         final RecyclerView rv = view.findViewById(R.id.recycleViewMainActivytyId);
         adapter = new RecycleViewAdpter(getContext(), tasks);
         backgorund = (ConstraintLayout) view.findViewById(R.id.backgroun_off);
@@ -79,6 +94,11 @@ public class TasksFragment extends Fragment {
                     db.taskDao().del(tasks.get(position));
                     tasks.remove(tasks.get(position));
                     adapter.notifyItemRemoved(position);
+                    int anInt = sharedPreferences.getInt(APP_PREFERENCES_TASKS_END, 0);
+                    anInt++;
+                    editor.putInt(APP_PREFERENCES_TASKS_END, anInt);
+                    editor.apply();
+                    iQuantityTasksEndListner.onQuantityTasksChange(anInt);
 
                 }
             }

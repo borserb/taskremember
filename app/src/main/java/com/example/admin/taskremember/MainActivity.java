@@ -1,6 +1,7 @@
 package com.example.admin.taskremember;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,12 +12,21 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IQuantityTasksEndListner {
     ViewPager vpTabs;
     TabLayout tlTabs;
+    TextView tvQuantity;
+    IQuantityTasksEndListner iQuantityTasksEndListner;
+    public int quantityEnd;
+    SharedPreferences sharedPreferences;
+
+
+
+
 
 
 
@@ -26,11 +36,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.fragmet_tasks);
         vpTabs = findViewById(R.id.vp_main_activity);
         tlTabs = findViewById(R.id.tabs);
+        sharedPreferences = getSharedPreferences(TasksFragment.APP_PREFERENCES, MODE_PRIVATE);
+       quantityEnd = sharedPreferences.getInt(TasksFragment.APP_PREFERENCES_TASKS_END, 0);
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         vpTabs.setAdapter(new TabsFragmentAdapter(fragmentManager));
         tlTabs.setupWithViewPager(vpTabs);
         applyThem();
+
+        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(ProductivityFragment.TAG);
+        ((ProductivityFragment)fragmentByTag).change();
+
+
+
+
+
 
 
     }
@@ -66,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
+
+    @Override
+    public void onQuantityTasksChange(int quantity) {
+    this.quantityEnd=quantity;
+    }
+
 
     public static class TabsFragmentAdapter extends FragmentPagerAdapter{
 
