@@ -14,16 +14,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class ProductivityFragment extends Fragment implements IMainActivityListner {
-    final static public String TAG="ProductivityFragment";
+public class ProductivityFragment extends Fragment {
+    final static public String TAG = "ProductivityFragment";
     TextView tvQuntity;
     SharedPreferences sharedPreferences;
-
-    @Override
-    public void onMainQuantitychange() {
-        FragmentActivity activity =(MainActivity) getActivity();
-        tvQuntity.setText("задач завершенно "+ ((MainActivity) activity).quantityEnd);
-    }
 
 
     public ProductivityFragment() {
@@ -47,15 +41,26 @@ public class ProductivityFragment extends Fragment implements IMainActivityListn
         super.onViewCreated(view, savedInstanceState);
         tvQuntity = view.findViewById(R.id.tv_tasks_end);
         tvQuntity.setText("12121212");
-        FragmentActivity activity =(MainActivity) getActivity();
-        tvQuntity.setText("задач завершенно "+ ((MainActivity) activity).quantityEnd);
+        FragmentActivity activity = (MainActivity) getActivity();
+        tvQuntity.setText("задач завершенно " + ((MainActivity) activity).quantityEnd);
+
+        sharedPreferences = activity.getSharedPreferences(TasksFragment.APP_PREFERENCES, activity.MODE_PRIVATE);
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if (key.equals(TasksFragment.APP_PREFERENCES_TASKS_END)) {
+                    tvQuntity.setText("задач завершенно " + ((MainActivity) getActivity()).getQuantityEnd());
+                }
+            }
+        });
 
 
     }
 
     public void change() {
-        FragmentActivity activity =(MainActivity) getActivity();
-        tvQuntity.setText("задач завершенно "+ ((MainActivity) activity).quantityEnd);
+        FragmentActivity activity = (MainActivity) getActivity();
+        tvQuntity.setText("задач завершенно " + ((MainActivity) activity).quantityEnd);
     }
 
     @Override

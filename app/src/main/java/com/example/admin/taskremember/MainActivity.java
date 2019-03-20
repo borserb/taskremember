@@ -12,19 +12,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity implements IQuantityTasksEndListner {
     ViewPager vpTabs;
     TabLayout tlTabs;
-    TextView tvQuantity;
-    IQuantityTasksEndListner iQuantityTasksEndListner;
+
+    public int getQuantityEnd() {
+        return quantityEnd;
+    }
+
     public int quantityEnd;
     SharedPreferences sharedPreferences;
-
-
 
 
 
@@ -41,20 +41,16 @@ public class MainActivity extends AppCompatActivity implements IQuantityTasksEnd
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        vpTabs.setAdapter(new TabsFragmentAdapter(fragmentManager));
+        TabsFragmentAdapter adapter = new TabsFragmentAdapter(fragmentManager);
+        vpTabs.setAdapter(adapter);
         tlTabs.setupWithViewPager(vpTabs);
         applyThem();
-
-        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(ProductivityFragment.TAG);
-        ((ProductivityFragment)fragmentByTag).change();
-
-
-
-
 
 
 
     }
+
+
 
     private void applyThem() {
         tlTabs.setBackgroundColor(getResources().getColor(R.color.blueFranchColor));
@@ -96,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements IQuantityTasksEnd
 
     public static class TabsFragmentAdapter extends FragmentPagerAdapter{
 
+
+
         public TabsFragmentAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -106,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements IQuantityTasksEnd
                 return TasksFragment.newInstance();
             }
             if (position == 1){
+
                 return ProductivityFragment.newInstance();
             }
             return null;
@@ -129,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements IQuantityTasksEnd
             return super.getPageTitle(position);
         }
     }
+
+
 
 
 }
