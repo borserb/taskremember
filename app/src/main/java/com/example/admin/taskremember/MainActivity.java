@@ -15,16 +15,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity implements IQuantityTasksEndListner {
+public class MainActivity extends AppCompatActivity  {
     ViewPager vpTabs;
     TabLayout tlTabs;
 
-    public int getQuantityEnd() {
-        return quantityEnd;
-    }
-
-    public int quantityEnd;
-    SharedPreferences sharedPreferences;
 
 
 
@@ -36,8 +30,6 @@ public class MainActivity extends AppCompatActivity implements IQuantityTasksEnd
         setContentView(R.layout.fragmet_tasks);
         vpTabs = findViewById(R.id.vp_main_activity);
         tlTabs = findViewById(R.id.tabs);
-        sharedPreferences = getSharedPreferences(TasksFragment.APP_PREFERENCES, MODE_PRIVATE);
-       quantityEnd = sharedPreferences.getInt(TasksFragment.APP_PREFERENCES_TASKS_END, 0);
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -84,10 +76,6 @@ public class MainActivity extends AppCompatActivity implements IQuantityTasksEnd
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onQuantityTasksChange(int quantity) {
-    this.quantityEnd=quantity;
-    }
 
 
     public static class TabsFragmentAdapter extends FragmentPagerAdapter{

@@ -22,7 +22,7 @@ public class PriorityDialogFragmenManager extends DialogFragment {
     public void onAttach(Context context) {
         if (context instanceof Activity) {
             iPriorityDialogListner = ((IPriorityDialogListner) context);
-            if (context instanceof IPriorityDialogListner){
+            if (context instanceof IPriorityDialogListner) {
                 iPriorityDialogListner = ((IPriorityDialogListner) context);
             } else {
                 throw new UnsupportedOperationException("Активити должно реализововать интерфейс IPriorityDialogListner");
@@ -48,7 +48,7 @@ public class PriorityDialogFragmenManager extends DialogFragment {
         final TextView textViewCancel = (TextView) view.findViewById(R.id.bt_cancel);
 
 
-        View.OnClickListener onClickListner = new  View.OnClickListener() {
+        View.OnClickListener onClickListner = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {

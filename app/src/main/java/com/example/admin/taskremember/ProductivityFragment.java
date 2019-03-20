@@ -18,7 +18,8 @@ public class ProductivityFragment extends Fragment {
     final static public String TAG = "ProductivityFragment";
     TextView tvQuntity;
     SharedPreferences sharedPreferences;
-
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
+    int tasksEnd;
 
     public ProductivityFragment() {
         // Required empty public constructor
@@ -42,30 +43,41 @@ public class ProductivityFragment extends Fragment {
         tvQuntity = view.findViewById(R.id.tv_tasks_end);
         tvQuntity.setText("12121212");
         FragmentActivity activity = (MainActivity) getActivity();
-        tvQuntity.setText("задач завершенно " + ((MainActivity) activity).quantityEnd);
 
         sharedPreferences = activity.getSharedPreferences(TasksFragment.APP_PREFERENCES, activity.MODE_PRIVATE);
+        tasksEnd = sharedPreferences.getInt(TasksFragment.APP_PREFERENCES_TASKS_END, 0);
+        tvQuntity.setText("задач завершенно " + tasksEnd);
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+        listener = getListener();
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+
+
+    }
+
+    @NonNull
+    private SharedPreferences.OnSharedPreferenceChangeListener getListener() {
+        return new SharedPreferences.OnSharedPreferenceChangeListener(){
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (key.equals(TasksFragment.APP_PREFERENCES_TASKS_END)) {
-                    tvQuntity.setText("задач завершенно " + ((MainActivity) getActivity()).getQuantityEnd());
+                    tasksEnd = sharedPreferences.getInt(TasksFragment.APP_PREFERENCES_TASKS_END, 0);
+                    tvQuntity.setText("задач завершенно " + tasksEnd);
                 }
             }
-        });
-
-
+        };
     }
 
-    public void change() {
-        FragmentActivity activity = (MainActivity) getActivity();
-        tvQuntity.setText("задач завершенно " + ((MainActivity) activity).quantityEnd);
-    }
+
 
     @Override
     public void onResume() {
         super.onResume();
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
     }
 }

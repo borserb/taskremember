@@ -32,7 +32,6 @@ import static android.app.Activity.RESULT_OK;
 public class TasksFragment extends Fragment {
     public static final String APP_PREFERENCES = "my_shared_pref";
     public static final String APP_PREFERENCES_TASKS_END = "tasks_end";
-    IQuantityTasksEndListner iQuantityTasksEndListner;
 
 
     ImageButton imageButton;
@@ -59,7 +58,6 @@ public class TasksFragment extends Fragment {
 
 
         FragmentActivity activity = getActivity();
-        iQuantityTasksEndListner = (IQuantityTasksEndListner) activity;
 
         sharedPreferences = activity.getSharedPreferences(APP_PREFERENCES, activity.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -98,7 +96,6 @@ public class TasksFragment extends Fragment {
                     anInt++;
                     editor.putInt(APP_PREFERENCES_TASKS_END, anInt);
                     editor.apply();
-                    iQuantityTasksEndListner.onQuantityTasksChange(anInt);
 
                 }
             }
