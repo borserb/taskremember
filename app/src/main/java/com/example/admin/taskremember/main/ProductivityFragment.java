@@ -1,8 +1,6 @@
-package com.example.admin.taskremember;
+package com.example.admin.taskremember.main;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.admin.taskremember.R;
 
 
 public class ProductivityFragment extends Fragment {

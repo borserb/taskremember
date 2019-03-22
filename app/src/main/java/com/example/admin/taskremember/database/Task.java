@@ -1,4 +1,4 @@
-package com.example.admin.taskremember;
+package com.example.admin.taskremember.database;
 
 
 import android.arch.persistence.room.Entity;

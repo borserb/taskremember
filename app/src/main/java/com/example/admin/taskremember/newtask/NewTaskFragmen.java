@@ -1,21 +1,12 @@
-package com.example.admin.taskremember;
+package com.example.admin.taskremember.newtask;
 
 
 import android.arch.persistence.room.Room;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +15,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.Inflater;
+import com.example.admin.taskremember.database.AppDatabase;
+import com.example.admin.taskremember.R;
+import com.example.admin.taskremember.database.Task;
 
 /**
  * A simple {@link Fragment} subclass.

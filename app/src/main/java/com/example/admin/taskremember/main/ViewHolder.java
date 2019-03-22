@@ -1,11 +1,13 @@
-package com.example.admin.taskremember;
+package com.example.admin.taskremember.main;
 
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.admin.taskremember.R;
+import com.example.admin.taskremember.database.Task;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
     TextView textView;

@@ -1,7 +1,6 @@
-package com.example.admin.taskremember;
+package com.example.admin.taskremember.main;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.admin.taskremember.R;
 
 
 public class MainActivity extends AppCompatActivity  {

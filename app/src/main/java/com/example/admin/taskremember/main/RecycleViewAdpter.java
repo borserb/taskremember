@@ -1,4 +1,4 @@
-package com.example.admin.taskremember;
+package com.example.admin.taskremember.main;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.example.admin.taskremember.R;
+import com.example.admin.taskremember.database.Task;
 
 import java.util.ArrayList;
 import java.util.List;

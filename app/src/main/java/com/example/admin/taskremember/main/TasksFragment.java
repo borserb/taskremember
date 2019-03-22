@@ -1,14 +1,10 @@
-package com.example.admin.taskremember;
+package com.example.admin.taskremember.main;
 
 import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -20,14 +16,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.admin.taskremember.database.AppDatabase;
+import com.example.admin.taskremember.newtask.NewTaskActivity;
+import com.example.admin.taskremember.R;
+import com.example.admin.taskremember.database.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 public class TasksFragment extends Fragment {
     public static final String APP_PREFERENCES = "my_shared_pref";

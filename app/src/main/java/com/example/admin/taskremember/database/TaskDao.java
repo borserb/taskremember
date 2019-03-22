@@ -1,9 +1,11 @@
-package com.example.admin.taskremember;
+package com.example.admin.taskremember.database;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+
+import com.example.admin.taskremember.database.Task;
 
 import java.util.List;
 @Dao
