@@ -97,6 +97,8 @@ public class TasksFragment extends Fragment {
                     editor.putInt(APP_PREFERENCES_TASKS_END, anInt);
                     editor.apply();
 
+                    tasksIsEmpty();
+
                 }
             }
         }).attachToRecyclerView(rv);
