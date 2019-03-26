@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity  {
         TabsFragmentAdapter adapter = new TabsFragmentAdapter(fragmentManager);
         vpTabs.setAdapter(adapter);
         tlTabs.setupWithViewPager(vpTabs);
-        applyThem();
+
 
 
 
@@ -45,11 +45,6 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-    private void applyThem() {
-        tlTabs.setBackgroundColor(getResources().getColor(R.color.blueFranchColor));
-        tlTabs.setTabTextColors(getResources().getColor(R.color.white_color),getResources().getColor(R.color.white_color));
-        tlTabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.white_color));
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
