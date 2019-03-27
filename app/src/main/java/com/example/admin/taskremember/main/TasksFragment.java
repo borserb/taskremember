@@ -4,10 +4,13 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,14 +32,14 @@ import java.util.List;
 public class TasksFragment extends Fragment {
     public static final String APP_PREFERENCES = "my_shared_pref";
     public static final String APP_PREFERENCES_TASKS_END = "tasks_end";
-
-
-    ImageButton imageButton;
     public final static int ACTIVITY_CODE = 101;
-    List <Task> tasks = new ArrayList();
-    ConstraintLayout backgorund;
-    RecycleViewAdpter adapter;
-    SharedPreferences sharedPreferences;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageButton imageButton;
+    private List <Task> tasks = new ArrayList();
+    private ConstraintLayout backgorund;
+    private RecycleViewAdpter adapter;
+    private SharedPreferences sharedPreferences;
 
 
     public TasksFragment() {
@@ -52,7 +55,12 @@ public class TasksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_old, container, false);
+        return view;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         FragmentActivity activity = getActivity();
 
@@ -71,6 +79,22 @@ public class TasksFragment extends Fragment {
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(rv.getContext(),
                 linearLayoutManager.getOrientation());
         rv.addItemDecoration(mDividerItemDecoration);
+
+
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadAllTasksFromDB();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
+
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
@@ -111,8 +135,6 @@ public class TasksFragment extends Fragment {
                 startActivityForResult(intent, ACTIVITY_CODE);
             }
         });
-
-        return view;
     }
 
 
@@ -127,7 +149,10 @@ public class TasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        loadAllTasksFromDB();
+    }
 
+    private void loadAllTasksFromDB() {
         FragmentActivity activity = getActivity();
 
         if (activity != null) {
@@ -137,6 +162,7 @@ public class TasksFragment extends Fragment {
             this.tasks = db.taskDao().getAll();
             adapter.setTaskList(tasks);
             tasksIsEmpty();
+
 
         }
 
