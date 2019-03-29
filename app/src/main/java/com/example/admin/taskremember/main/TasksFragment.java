@@ -69,7 +69,7 @@ public class TasksFragment extends Fragment {
 
         final RecyclerView rv = view.findViewById(R.id.recycleViewMainActivytyId);
         adapter = new RecycleViewAdpter(getContext(), tasks);
-        backgorund = (ConstraintLayout) view.findViewById(R.id.backgroun_off);
+        backgorund = view.findViewById(R.id.backgroun_off);
         backgorund.setVisibility(View.INVISIBLE);
 
 
