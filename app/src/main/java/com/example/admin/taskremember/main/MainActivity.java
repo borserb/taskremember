@@ -3,6 +3,7 @@ package com.example.admin.taskremember.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,16 +12,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.admin.taskremember.R;
+import com.example.admin.taskremember.newtask.NewTaskActivity;
 
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
     ViewPager vpTabs;
     TabLayout tlTabs;
-
-
+    public final static int ACTIVITY_CODE = 101;
+    private FloatingActionButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +38,18 @@ public class MainActivity extends AppCompatActivity  {
         vpTabs.setAdapter(adapter);
         tlTabs.setupWithViewPager(vpTabs);
 
-    }
+        imageButton = findViewById(R.id.imageButtonAddNewTascActivity);
+        imageButton.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, NewTaskActivity.class);
+                startActivityForResult(intent, ACTIVITY_CODE);
+            }
+        });
+
+    }
 
 
     @Override
@@ -47,8 +60,8 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       int id =  item.getItemId();
-        if (id == R.id.send_masseg){
+        int id = item.getItemId();
+        if (id == R.id.send_masseg) {
             Toast.makeText(this, "Menu click", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/html");
@@ -66,9 +79,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-
-    public static class TabsFragmentAdapter extends FragmentPagerAdapter{
-
+    public static class TabsFragmentAdapter extends FragmentPagerAdapter {
 
 
         public TabsFragmentAdapter(FragmentManager fm) {
@@ -77,10 +88,10 @@ public class MainActivity extends AppCompatActivity  {
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0){
+            if (position == 0) {
                 return TasksFragment.newInstance();
             }
-            if (position == 1){
+            if (position == 1) {
 
                 return ProductivityFragment.newInstance();
             }
@@ -95,18 +106,16 @@ public class MainActivity extends AppCompatActivity  {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 0){
+            if (position == 0) {
                 return "Задачи";
             }
-            if (position == 1){
+            if (position == 1) {
                 return "Продуктивность";
             }
 
             return super.getPageTitle(position);
         }
     }
-
-
 
 
 }

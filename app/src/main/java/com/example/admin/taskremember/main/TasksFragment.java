@@ -1,14 +1,12 @@
 package com.example.admin.taskremember.main;
 
 import android.arch.persistence.room.Room;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,12 +17,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.example.admin.taskremember.database.AppDatabase;
-import com.example.admin.taskremember.newtask.NewTaskActivity;
 import com.example.admin.taskremember.R;
+import com.example.admin.taskremember.database.AppDatabase;
 import com.example.admin.taskremember.database.Task;
 
 import java.util.ArrayList;
@@ -33,10 +28,10 @@ import java.util.List;
 public class TasksFragment extends Fragment {
     public static final String APP_PREFERENCES = "my_shared_pref";
     public static final String APP_PREFERENCES_TASKS_END = "tasks_end";
-    public final static int ACTIVITY_CODE = 101;
+
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FloatingActionButton imageButton;
+
     private List <Task> tasks = new ArrayList();
     private ConstraintLayout backgorund;
     private RecycleViewAdpter adapter;
@@ -126,16 +121,6 @@ public class TasksFragment extends Fragment {
         }).attachToRecyclerView(rv);
 
 
-        imageButton = view.findViewById(R.id.imageButtonAddNewTascActivity);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Click", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getContext(), NewTaskActivity.class);
-                startActivityForResult(intent, ACTIVITY_CODE);
-            }
-        });
     }
 
 
