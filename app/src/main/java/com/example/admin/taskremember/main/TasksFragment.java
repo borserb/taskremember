@@ -1,9 +1,11 @@
 package com.example.admin.taskremember.main;
 
+import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -14,10 +16,12 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.admin.taskremember.App;
 import com.example.admin.taskremember.R;
 import com.example.admin.taskremember.database.AppDatabase;
 import com.example.admin.taskremember.database.Task;
@@ -32,10 +36,15 @@ public class TasksFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    public void setTasks(List <Task> tasks) {
+        this.tasks = tasks;
+    }
+
     private List <Task> tasks = new ArrayList();
     private ConstraintLayout backgorund;
     private RecycleViewAdpter adapter;
     private SharedPreferences sharedPreferences;
+    private AppDatabase db;
 
 
     public TasksFragment() {
@@ -59,6 +68,8 @@ public class TasksFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FragmentActivity activity = getActivity();
+        Application application = (App)activity.getApplication();
+        db = ((App) application).getDb();
 
         sharedPreferences = activity.getSharedPreferences(APP_PREFERENCES, activity.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -104,7 +115,7 @@ public class TasksFragment extends Fragment {
 
                 if (activity != null) {
 
-                    final AppDatabase db = Room.databaseBuilder(activity, AppDatabase.class, "databse-name").allowMainThreadQueries().build();
+
                     int position = viewHolder.getPosition();
                     db.taskDao().del(tasks.get(position));
                     tasks.remove(tasks.get(position));
@@ -114,7 +125,7 @@ public class TasksFragment extends Fragment {
                     editor.putInt(APP_PREFERENCES_TASKS_END, anInt);
                     editor.apply();
 
-                    tasksIsEmpty();
+                    tasksIsEmpty(tasks);
 
                 }
             }
@@ -124,7 +135,7 @@ public class TasksFragment extends Fragment {
     }
 
 
-    private void tasksIsEmpty() {
+    private void tasksIsEmpty(List<Task> tasks) {
         if (tasks.isEmpty()) {
             backgorund.setVisibility(View.VISIBLE);
         } else {
@@ -138,20 +149,40 @@ public class TasksFragment extends Fragment {
         loadAllTasksFromDB();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+    }
+
     private void loadAllTasksFromDB() {
         FragmentActivity activity = getActivity();
 
         if (activity != null) {
+            Application application = (App) activity.getApplication();
+            final AppDatabase db = ((App) application).getDb();
 
-            final AppDatabase db = Room.databaseBuilder(activity, AppDatabase.class, "databse-name").allowMainThreadQueries().build();
-            db.taskDao();
-            this.tasks = db.taskDao().getAll();
-            adapter.setTaskList(tasks);
-            tasksIsEmpty();
+            final Handler handler = new Handler(Looper.getMainLooper());
 
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final List <Task> tasks = db.taskDao().getAll();
+                    Log.i("ThreadTest", " " + Thread.currentThread());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i("ThreadTest", " " + Thread.currentThread());
+                            adapter.setTaskList(tasks);
+                            tasksIsEmpty(tasks);
+                            setTasks(tasks);
+
+                        }
+                    });
+                }
+            }, "BackgroundThread").start();
 
         }
-
     }
 }
 

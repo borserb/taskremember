@@ -1,8 +1,11 @@
 package com.example.admin.taskremember.newtask;
 
 
+import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -15,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.taskremember.App;
 import com.example.admin.taskremember.database.AppDatabase;
 import com.example.admin.taskremember.R;
 import com.example.admin.taskremember.database.Task;
@@ -61,9 +65,12 @@ public class NewTaskFragmen extends Fragment {
                 Task task = new Task(editText.getText().toString(), getResources().getColor(priprity));
 
                 if (activity != null) {
-
-                    final AppDatabase db = Room.databaseBuilder(activity, AppDatabase.class, "databse-name").allowMainThreadQueries().build();
+                    Application application =(App) activity.getApplication();
+                    AppDatabase db = ((App) application).getDb();
                     db.taskDao().insert(task);
+
+                  /*  final AppDatabase db = Room.databaseBuilder(activity, AppDatabase.class, "databse-name").allowMainThreadQueries().build();
+                    db.taskDao().insert(task);*/
 
                 }
 
@@ -89,6 +96,7 @@ public class NewTaskFragmen extends Fragment {
         });
         return root;
     }
+
 
     public static NewTaskFragmen newInstance() {
         NewTaskFragmen fragment = new NewTaskFragmen();
