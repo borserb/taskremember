@@ -1,11 +1,13 @@
 package com.example.admin.taskremember.main;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -20,12 +22,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.admin.taskremember.App;
 import com.example.admin.taskremember.R;
 import com.example.admin.taskremember.database.AppDatabase;
 import com.example.admin.taskremember.database.Task;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +35,8 @@ public class TasksFragment extends Fragment {
 
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Handler handler;
+    private Runnable runnable;
 
     public void setTasks(List <Task> tasks) {
         this.tasks = tasks;
@@ -68,7 +70,7 @@ public class TasksFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FragmentActivity activity = getActivity();
-        Application application = (App)activity.getApplication();
+        Application application = (App) activity.getApplication();
         db = ((App) application).getDb();
 
         sharedPreferences = activity.getSharedPreferences(APP_PREFERENCES, activity.MODE_PRIVATE);
@@ -131,11 +133,13 @@ public class TasksFragment extends Fragment {
             }
         }).attachToRecyclerView(rv);
 
+        loadAllTasksFromDB();
+
 
     }
 
 
-    private void tasksIsEmpty(List<Task> tasks) {
+    private void tasksIsEmpty(List <Task> tasks) {
         if (tasks.isEmpty()) {
             backgorund.setVisibility(View.VISIBLE);
         } else {
@@ -146,14 +150,14 @@ public class TasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadAllTasksFromDB();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
+        handler.removeCallbacks(runnable);
     }
+
 
     private void loadAllTasksFromDB() {
         FragmentActivity activity = getActivity();
@@ -162,23 +166,25 @@ public class TasksFragment extends Fragment {
             Application application = (App) activity.getApplication();
             final AppDatabase db = ((App) application).getDb();
 
-            final Handler handler = new Handler(Looper.getMainLooper());
+            handler = new Handler(Looper.getMainLooper());
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     final List <Task> tasks = db.taskDao().getAll();
                     Log.i("ThreadTest", " " + Thread.currentThread());
-                    handler.post(new Runnable() {
+
+                    runnable = new Runnable() {
                         @Override
                         public void run() {
                             Log.i("ThreadTest", " " + Thread.currentThread());
                             adapter.setTaskList(tasks);
                             tasksIsEmpty(tasks);
                             setTasks(tasks);
-
                         }
-                    });
+                    };
+
+                    handler.post(runnable);
                 }
             }, "BackgroundThread").start();
 
