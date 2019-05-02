@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.admin.taskremember.ProductivityFragment.ProductivityFragment;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,12 +21,16 @@ public class DaysOfWeek extends ViewGroup {
     }
 
     private void init() {
+
+        ProductivityFragment.GraphView graphView = new ProductivityFragment.GraphView(getContext());
+        graphView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        addView(graphView);
+
         for (String day : days) {
             TextView tv = new TextView(getContext());
             tv.setText(day);
             tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
             addView(tv);
-
         }
     }
 
