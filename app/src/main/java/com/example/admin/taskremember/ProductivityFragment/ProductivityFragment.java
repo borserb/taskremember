@@ -1,17 +1,26 @@
-package com.example.admin.taskremember.main;
+package com.example.admin.taskremember.ProductivityFragment;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.admin.taskremember.ProductivityFragment.CustomView.DaysOfWeek;
 import com.example.admin.taskremember.R;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 
 public class ProductivityFragment extends Fragment {
@@ -34,14 +43,14 @@ public class ProductivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_productivity, container, false);
+        /*return inflater.inflate(R.layout.fragment_productivity, container, false);*/
+        return new DaysOfWeek(inflater.getContext());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tvQuntity = view.findViewById(R.id.tv_tasks_end);
-        tvQuntity.setText("12121212");
+/*        tvQuntity = view.findViewById(R.id.tv_tasks_end);
         FragmentActivity activity = (MainActivity) getActivity();
 
         sharedPreferences = activity.getSharedPreferences(TasksFragment.APP_PREFERENCES, activity.MODE_PRIVATE);
@@ -49,12 +58,12 @@ public class ProductivityFragment extends Fragment {
         tvQuntity.setText("задач завершенно " + tasksEnd);
 
         listener = getListener();
-        sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener);*/
 
 
     }
 
-    @NonNull
+/*    @NonNull
     private SharedPreferences.OnSharedPreferenceChangeListener getListener() {
         return new SharedPreferences.OnSharedPreferenceChangeListener(){
             @Override
@@ -79,5 +88,7 @@ public class ProductivityFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
-    }
+    }*/
+
+
 }

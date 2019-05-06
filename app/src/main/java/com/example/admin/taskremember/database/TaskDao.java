@@ -18,4 +18,5 @@ public interface TaskDao {
 
     @Delete
     void del(Task task);
+
 }
