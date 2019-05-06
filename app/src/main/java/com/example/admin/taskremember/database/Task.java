@@ -13,6 +13,7 @@ public class Task implements Parcelable {
     public String name;
     public int priprity;
 
+
     public Task(String name, int priprity) {
         this.name = name;
         this.priprity = priprity;
