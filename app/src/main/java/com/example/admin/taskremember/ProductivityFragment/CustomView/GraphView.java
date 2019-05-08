@@ -44,8 +44,7 @@ public class GraphView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         measureHight = MeasureSpec.getSize(heightMeasureSpec);
         measureWidth = MeasureSpec.getSize(widthMeasureSpec);
-        setMeasuredDimension(measureWidth, measureHight);
-
+        setMeasuredDimension(measureWidth, measureHight);//обязательный метод возвращает размер вью после пересчета
 
         init();
     }
@@ -67,13 +66,13 @@ public class GraphView extends View {
         paintCircles.setColor(getContext().getResources().getColor(R.color.circle_lines_french_blue));
 
         paintLines.setColor(getContext().getResources().getColor(R.color.circle_lines_french_blue));
-        paintLines.setStrokeWidth(3);
+        paintLines.setStrokeWidth(getPx(1));
         paintLines.setAlpha(128); // прозрачность от 0 до 255
         paintLines.setStyle(Paint.Style.STROKE);
 
         canvas.drawPath(graphPath, paint);
         canvas.drawPath(graphPathLiners, paintLines);
-        paintLines.setStrokeWidth(6);
+        paintLines.setStrokeWidth(getPx(3));
         canvas.drawPath(graphPathMainLine, paintLines);
         canvas.drawPath(graphPathCircles, paintCircles);
     }

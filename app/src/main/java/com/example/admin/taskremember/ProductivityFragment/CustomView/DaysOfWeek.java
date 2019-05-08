@@ -35,6 +35,7 @@ public class DaysOfWeek extends ViewGroup {
         }
     }
 
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         /* получаем все свободное место для контейнера, высоту определяем как половину всего экрана*/

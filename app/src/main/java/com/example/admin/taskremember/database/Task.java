@@ -28,8 +28,6 @@ public class Task implements Parcelable {
         this.name = name;
     }
 
-
-
     public int getPriprity() {
         return priprity;
     }
